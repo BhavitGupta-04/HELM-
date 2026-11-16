@@ -1,6 +1,5 @@
 # HELM: Health Engine for Long-duration Missions
-
-NASA Space Apps 2026 · Challenge: *Create Health Monitoring Software for Astronauts on Space Missions*
+Website link: https://bhavitgupta-04.github.io/HELM-/ 
 
 Astronauts on long-duration missions face measurable, well-documented physiological risks: bone density loss up to
 ten times faster than severe osteoporosis on Earth, vision damage in roughly 70% of ISS crew members
