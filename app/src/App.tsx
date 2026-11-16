@@ -10,7 +10,6 @@ import { CarePlan } from "./ui/CarePlan";
 import { Starfield } from "./ui/Starfield";
 import { CameraPulse } from "./ui/CameraPulse";
 import { ReactionTest } from "./ui/ReactionTest";
-import { RadLabNote } from "./ui/RadLab";
 import { SpaceWeatherPanel } from "./ui/SpaceWeatherPanel";
 import { useSpaceWeather } from "./ui/swData";
 import { IDS, STATUS_COLOR, useMission } from "./ui/state";
@@ -90,7 +89,6 @@ export default function App() {
             </section>
             <HazardRadar m={m} active={hazard} onPick={setHazard} swLevel={sw.summary.level} />
             <DoseWallet m={m} swLevel={sw.summary?.level} />
-            <RadLabNote />
           </div>
 
           <div className="col">

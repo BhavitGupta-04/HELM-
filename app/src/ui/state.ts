@@ -103,12 +103,19 @@ export function useMission(profile: Passport = {}) {
   const changeEnv = useCallback((e: Environment) => { setEnv(e); setDelay(null); setEvents([]); setOverrides({}); setStorm(null); setViewDay(44); }, []);
 
   const verify = useCallback(async (tamper: boolean) => {
+    // Simulating tampering needs something in the chain to corrupt. On a fresh session nothing has
+    // been logged yet, so seed a couple of real entries first rather than silently doing nothing.
+    if (tamper && ledger.current.entries.length < 2) {
+      await ledger.current.append("reading", { id: "heartRate", v: series.heartRate[day]?.value ?? 64, day });
+      await ledger.current.append("reading", { id: "systolic", v: series.systolic[day]?.value ?? 112, day });
+      setLedgerEntries([...ledger.current.entries]);
+    }
     const entries = tamper ? JSON.parse(JSON.stringify(ledger.current.entries)) as LedgerEntry[] : ledger.current.entries;
     if (tamper && entries.length > 1) (entries[Math.floor(entries.length / 2)].payload as any) = { forged: true };
     setTamperAt(await ledger.current.verify(entries));
     if (tamper) setLedgerEntries(entries);
     else setLedgerEntries([...ledger.current.entries]);
-  }, []);
+  }, [series, day]);
 
   return { priors, reportNotes, env, changeEnv, total, day, jump, series, assessments, bands, patterns, systemStatus, overall, readiness, events, inject, replay, clearEvents, logReading,
     delaySec, setDelay, storm, setStorm, warp, ledgerEntries, tamperAt, verify, log };

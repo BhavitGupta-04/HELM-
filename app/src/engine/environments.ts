@@ -19,22 +19,27 @@ export const ENVIRONMENTS: Record<Environment, EnvDef> = {
 
 export const CAREER_DOSE_LIMIT_MSV = 600; // NASA-STD-3001 career limit (2022 revision), see docs/SOURCES.md
 
-export interface HazardDef { id: HazardId; label: string; short: string; systems: SystemId[]; blurb: string; color: string }
+export interface HazardDef { id: HazardId; label: string; short: string; systems: SystemId[]; blurb: string; color: string; nasaUrl: string; risks: string[] }
 
 export const HAZARDS: Record<HazardId, HazardDef> = {
   radiation: { id: "radiation", label: "Space Radiation", short: "Radiation", color: "#ffb454",
     systems: ["immune", "brain", "heart", "gut"],
-    blurb: "Galactic cosmic rays and solar particle events raise cancer, cardiovascular and central-nervous-system risk." },
-  isolation: { id: "isolation", label: "Isolation & Confinement", short: "Isolation", color: "#b48cff",
+    blurb: "Galactic cosmic rays and solar particle events raise cancer, cardiovascular and central-nervous-system risk.",
+    nasaUrl: "https://www.nasa.gov/hrp/hazard-space-radiation/", risks: ["Risk of Radiation-Induced Cancers"] },
+  isolation: { id: "isolation", label: "Isolation and Confinement", short: "Isolation", color: "#b48cff",
     systems: ["brain", "immune"],
-    blurb: "Small crew, no escape, monotony. Affects mood, sleep, cognition and team cohesion." },
+    blurb: "Small crew, no escape, monotony. Affects mood, sleep, cognition and team cohesion.",
+    nasaUrl: "https://www.nasa.gov/hrp/hazard-isolation-and-confinement/", risks: ["Risk of Behavioral Changes and Psychiatric Disorders", "Risk of Inadequate Sleep and Irregular Schedules", "Risk of Inadequate Teamwork"] },
   distance: { id: "distance", label: "Distance from Earth", short: "Distance", color: "#5ec8ff",
     systems: ["brain", "gut"],
-    blurb: "Delayed comms and no quick return mean the crew must diagnose and treat on its own." },
-  gravity: { id: "gravity", label: "Altered Gravity", short: "Gravity", color: "#7dffb0",
+    blurb: "Delayed comms and no quick return mean the crew must diagnose and treat on its own.",
+    nasaUrl: "https://www.nasa.gov/hrp/hazard-distance-from-earth/", risks: [] },
+  gravity: { id: "gravity", label: "Gravity Fields", short: "Gravity", color: "#7dffb0",
     systems: ["bones", "muscle", "heart", "eyes"],
-    blurb: "Bone and muscle loss, fluid shifts, vision changes and cardiovascular deconditioning." },
-  closed: { id: "closed", label: "Hostile Closed Environment", short: "Habitat", color: "#ff6b8a",
+    blurb: "Bone and muscle loss, fluid shifts, vision changes and cardiovascular deconditioning.",
+    nasaUrl: "https://www.nasa.gov/hrp/hazard-gravity-fields/", risks: ["Risk of Cardiovascular Adaptations", "Risk of Spaceflight-Induced Bone Changes", "Risk of Reduced Cardiorespiratory and Musculoskeletal Fitness", "Risk of Spaceflight Associated Neuro-ocular Syndrome (SANS)", "Risk of Altered Sensorimotor and Vestibular Function"] },
+  closed: { id: "closed", label: "Hostile/Closed Environments", short: "Habitat", color: "#ff6b8a",
     systems: ["lungs", "immune", "gut", "eyes"],
-    blurb: "Air, water, microbes, noise and temperature all depend on life support working." },
+    blurb: "Air, water, microbes, noise and temperature all depend on life support working.",
+    nasaUrl: "https://www.nasa.gov/hrp/hazard-hostile-closed-environments/", risks: ["Risk of Altered Immune System Responses", "Risk of Host-Microorganism Interactions", "Risk of Hypoxia", "Risk of Decompression Sickness", "Risk of Inadequate Food and Nutrition"] },
 };

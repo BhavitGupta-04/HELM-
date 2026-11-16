@@ -33,7 +33,7 @@ export function TrustDrawer({ open, onClose }: Props) {
           <p className="sbar" style={{ margin: "6px 0 14px" }}>HELM never invents confidence — it proves its numbers live, in this browser, instead of asking you to trust a slide.</p>
 
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "0 0 16px" }}>
-            <TinyStat value="93" label="automated tests" sub="8 suites · all passing" />
+            <TinyStat value="103" label="automated tests" sub="9 suites · all passing" />
             <TinyStat value="720" label="calm-day checks / run" sub="30 missions × 24 days each" />
             <TinyStat value="90" label="injected-event trials / run" sub="30 missions × 3 conditions" />
             <TinyStat value="4" label="real bugs caught" sub="by the suite, before launch" />

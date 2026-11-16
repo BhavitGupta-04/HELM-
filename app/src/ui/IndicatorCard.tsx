@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { INDICATORS, type Assessment, type IndicatorId, type Reading } from "../engine";
+import { INDICATORS, describeDrift, harmfulDirection, projectDrift, type Assessment, type IndicatorId, type Reading } from "../engine";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { Sparkline, type Band } from "./Sparkline";
 import { STATUS_COLOR } from "./state";
@@ -23,6 +23,7 @@ export function IndicatorCard({ id, a, series, day, bands, reference, onLog }: P
   const vals = series.slice(start, day + 1).map((r) => r.value);
   const submit = () => { const v = parseFloat(txt); if (Number.isFinite(v) && v >= def.plausible[0] && v <= def.plausible[1]) { onLog(v); setTxt(""); } };
   const invalid = txt !== "" && !(parseFloat(txt) >= def.plausible[0] && parseFloat(txt) <= def.plausible[1]);
+  const drift = projectDrift(vals, a.interval, harmfulDirection(id));
   return (
     <motion.article layout className="card" style={{ ["--c" as any]: col }} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: "spring", stiffness: 260, damping: 26 }}>
       <div className="row">
@@ -33,6 +34,11 @@ export function IndicatorCard({ id, a, series, day, bands, reference, onLog }: P
       <div style={{ margin: "10px 0 2px" }}><Sparkline values={vals} bands={bands} earth={def.earth} reference={reference} color={col} markIndex={vals.length - 1} /></div>
       <div className="legend">Shaded band = your personal range · faint dashed = typical Earth range{reference !== undefined && <span style={{ color: "var(--watch)" }}> · gold dashed = your Earth baseline ({reference})</span>}</div>
       <p className="reason">{a.reasons.join(" ")}</p>
+      {drift && (
+        <p className="legend" style={{ color: "var(--watch)", margin: "0 0 6px" }} role="status">
+          {describeDrift(drift)} Projected from the recent trend, not a confirmed event.
+        </p>
+      )}
       {a.status !== "nominal" && def.actions[0] && (
         <div className="sbar" style={{ margin: "6px 0 0", padding: "6px 10px", borderRadius: 10, border: `1px solid ${col}55`, background: `${col}14`, color: "var(--ink)" }}>
           <strong style={{ color: col }}>Do this: </strong>{def.actions[0]}
